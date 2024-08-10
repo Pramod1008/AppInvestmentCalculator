@@ -1,11 +1,15 @@
-// Use the below code as a help
-// e.g., integrate it into a service or component
-// You may need to tweak it, depending on where and how you use it
+import { Injectable, signal } from "@angular/core";
+import { calculatedInvestmentResults } from "../model/investment-result.model";
+import { InvestmentInput } from "../model/Investment-input.model";
 
-import type { InvestmentInput } from "./app/model/Investment-input.model";
+@Injectable({providedIn : "root" })
+export class InvestmentService{
 
+    // resultData? : calculatedInvestmentResults[];
+  resultData = signal<calculatedInvestmentResults[] | undefined>(undefined)
 
-function calculateInvestmentResults(userInput : InvestmentInput) {
+  CalculateInvestmentResults(userInput : InvestmentInput) {
+    console.log(userInput);
     const annualData = [];
     let investmentValue = userInput.initialInvestment;
   
@@ -24,7 +28,8 @@ function calculateInvestmentResults(userInput : InvestmentInput) {
         totalAmountInvested: userInput.initialInvestment + userInput.annualInvestment * year,
       });
     }
-  
-    return annualData;
+    console.log(annualData);
+    //this.resultData=  annualData;
+    this.resultData.set(annualData);
   }
-  
+}
